@@ -1,0 +1,23 @@
+{
+  "name": "wansimon",
+  "version": "1.0.0",
+  "description": "个人博客",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WanSimon/WanSimon.git"
+  },
+  "keywords": [],
+  "author": "WanSimon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WanSimon/WanSimon/issues"
+  },
+  "homepage": "https://github.com/WanSimon/WanSimon#readme"
+}

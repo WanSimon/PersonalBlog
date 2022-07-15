@@ -2,12 +2,12 @@
 
 ### I-项目介绍
 
-分享个人生活、工作、爱好等，
+分享个人生活、工作、爱好等.
 
 ### II-技术选型
 
-前后端分开开发，前端采用 Vue、Vite、Vuex、Vue-Router、javaScript、TypeScript、less、axios、Element-UI
-后端采用
+- 前后端分开开发，前端采用 Vue、Vite、Vuex、Vue-Router、javaScript、TypeScript、less、axios、Element-UI
+- 后端技术,express 框架
 
 ### III-模块介绍
 
