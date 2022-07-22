@@ -1,11 +1,12 @@
-<template>
-  <a-layout>
+<template class="template">
+  <a-layout class="all">
     <a-layout-header class="header">
+      <!-- <div style="background: #fff">123</div> -->
       <!-- <div class="logo" /> -->
       <!-- 用户头像、用户名称、公司logo -->
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff">
+      <a-layout-sider width="200" height="90%" style="background: #fff">
         <a-menu
           v-model:selectedKeys="selectedKeys2"
           v-model:openKeys="openKeys"
@@ -16,37 +17,71 @@
             <template #title>
               <span>
                 <user-outlined />
-                subnav 1
+                博文管理
               </span>
             </template>
-            <a-menu-item key="1">option1</a-menu-item>
-            <a-menu-item key="2">option2</a-menu-item>
-            <a-menu-item key="3">option3</a-menu-item>
-            <a-menu-item key="4">option4</a-menu-item>
+            <a-menu-item key="1"
+              ><router-link to="/blogs/list">博文列表</router-link></a-menu-item
+            >
+            <a-menu-item key="2">
+              <router-link to="/blogs/${id}/blog">更新博文</router-link>
+            </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
             <template #title>
               <span>
                 <laptop-outlined />
-                subnav 2
+                用户管理
               </span>
             </template>
-            <a-menu-item key="5">option5</a-menu-item>
-            <a-menu-item key="6">option6</a-menu-item>
-            <a-menu-item key="7">option7</a-menu-item>
-            <a-menu-item key="8">option8</a-menu-item>
+            <a-menu-item key=""
+              ><router-link to="">用户列表</router-link></a-menu-item
+            >
+            <a-menu-item key=""
+              ><router-link to="">更新用户</router-link></a-menu-item
+            >
           </a-sub-menu>
-          <a-sub-menu key="sub3">
+          <a-sub-menu key="sub2">
             <template #title>
               <span>
-                <notification-outlined />
-                subnav 3
+                <laptop-outlined />
+                标签管理
               </span>
             </template>
-            <a-menu-item key="9">option9</a-menu-item>
-            <a-menu-item key="10">option10</a-menu-item>
-            <a-menu-item key="11">option11</a-menu-item>
-            <a-menu-item key="12">option12</a-menu-item>
+            <a-menu-item key=""
+              ><router-link to="">标签列表</router-link></a-menu-item
+            >
+            <a-menu-item key=""
+              ><router-link to="">新建标签</router-link></a-menu-item
+            >
+          </a-sub-menu>
+          <a-sub-menu key="sub2">
+            <template #title>
+              <span>
+                <laptop-outlined />
+                评论管理
+              </span>
+            </template>
+            <a-menu-item key=""
+              ><router-link to="">评论列表</router-link></a-menu-item
+            >
+            <a-menu-item key=""
+              ><router-link to="">新建评论</router-link></a-menu-item
+            >
+          </a-sub-menu>
+          <a-sub-menu key="sub2">
+            <template #title>
+              <span>
+                <laptop-outlined />
+                用户中心
+              </span>
+            </template>
+            <a-menu-item key=""
+              ><router-link to="">个人资料</router-link></a-menu-item
+            >
+            <a-menu-item key=""
+              ><router-link to="">修改资料</router-link></a-menu-item
+            >
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
@@ -72,17 +107,12 @@
   </a-layout>
 </template>
 <script>
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons-vue";
+import { UserOutlined, LaptopOutlined } from "@ant-design/icons-vue";
 import { defineComponent, ref } from "vue";
 export default defineComponent({
   components: {
     UserOutlined,
     LaptopOutlined,
-    NotificationOutlined,
   },
 
   setup() {
@@ -96,6 +126,12 @@ export default defineComponent({
 });
 </script>
 <style>
+.all {
+  border: skyblue solid 1px;
+  margin-top: -60px;
+  height: 770px;
+  /* padding-top: -60px; */
+}
 #components-layout-demo-top-side-2 .logo {
   float: left;
   width: 120px;

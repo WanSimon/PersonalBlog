@@ -1,20 +1,12 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
-  <a-button type="primary">Primary Button</a-button>
-  <a-button @click="goToListPage">Default Button</a-button> -->
-  <router-view></router-view>
+  <router-view class="view"></router-view>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 import { useRouter } from "vue-router";
 
 export default {
   name: "App",
-  components: {
-    // HelloWorld,
-  },
   setup() {
     const router = useRouter();
     const goToListPage = () => router.push("/study");
@@ -26,6 +18,10 @@ export default {
 </script>
 
 <style>
+.view {
+  border: red solid 3px;
+  height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

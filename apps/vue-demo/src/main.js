@@ -2,8 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./config/routes";
 import VueRouter from "vue-router";
-import Antd from "ant-design-vue";
-import "ant-design-vue/dist/antd.css";
+// import Antd from "ant-design-vue";
+// import "ant-design-vue/dist/antd.css";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -64,7 +64,7 @@ new Vue({
   router,
   render: (h) => h(App),
 })
-  .use(Antd)
+  // .use(Antd)
   .$mount("#app");
 
 router.push("/user");
