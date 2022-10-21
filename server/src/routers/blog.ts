@@ -1,4 +1,4 @@
-import server from '../../index';
+import fastify from '../../index';
 import {
   getBlogListParamsSchema,
   getBlogListRequestSchema,
@@ -28,7 +28,7 @@ import type {
 } from '../schema/blogs';
 //Body Params Querystring Headers
 
-server.post<{
+fastify.post<{
   Body: CreatedBlogBody;
   Params: CreatedBlogParams;
   Headers: unknown;
