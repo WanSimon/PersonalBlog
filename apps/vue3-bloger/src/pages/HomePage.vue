@@ -1,3 +1,0 @@
-<template>
-  <a-skeleton />
-</template>

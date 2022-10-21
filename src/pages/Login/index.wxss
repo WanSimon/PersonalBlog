@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.container {
+  padding-top: 80px;
+}
+.input {
+  width: 400px;
+  border: 2px solid red;
+  margin-left: 40%;
+}
+.formContainer {
+  border: 2px solid red;
+  margin-top: 4rem;
+}
+.submit {
+  width: 300px;
+  border: 1px red solid;
+  margin-left: 42%;
+}
+.login {
+  width: 150px;
+  margin-left: 19%;
+}
+.submitButton {
+  width: 150px;
+}
+:global(.ant-radio-group) {
+  width: 600px;
+}
+:global(.ant-radio-button-wrapper) {
+  width: 300px;
+  text-align: center;
+}
