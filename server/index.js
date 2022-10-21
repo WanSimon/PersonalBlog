@@ -32,15 +32,22 @@ const opts = {
 server.get('/ping', opts, () => __awaiter(void 0, void 0, void 0, function* () {
     return { pong: 'it worked' };
 }));
-const start = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield server.listen({ port: 3000 });
-        // const address = server.server.address();
-        // const port = typeof address === 'string' ? address : address?.port;
-    }
-    catch (err) {
-        server.log.error(err);
+// const start = async () => {
+//   try {
+//     await server.listen({ port: 3000 });
+//     // const address = server.server.address();
+//     // const port = typeof address === 'string' ? address : address?.port;
+//   } catch (err) {
+//     server.log.error(err);
+//     process.exit(1);
+//   }
+// };
+// start();
+server.listen({ port: 8080 }, (err, address) => {
+    if (err) {
+        console.error(err);
+        console.info(address);
         process.exit(1);
     }
+    console.info(`Server listening at ${address}`);
 });
-start();

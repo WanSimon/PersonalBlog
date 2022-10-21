@@ -1,8 +1,6 @@
 import Fastify from 'fastify';
 import type { FastifyInstance, RouteShorthandOptions } from 'fastify';
-import { Console } from 'console';
 
-// const fastify = require('fastify')({ logger: true });
 const server: FastifyInstance = Fastify({});
 
 const opts: RouteShorthandOptions = {
@@ -24,18 +22,40 @@ server.get('/ping', opts, async () => {
   return { pong: 'it worked' };
 });
 
-// const start = async () => {
-//   try {
-//     await server.listen({ port: 3000 });
-//     // const address = server.server.address();
-//     // const port = typeof address === 'string' ? address : address?.port;
-//   } catch (err) {
-//     server.log.error(err);
-//     process.exit(1);
-//   }
-// };
+interface IQuerystring {
+  username: string;
+  password: string;
+}
 
-// start();
+interface IHeaders {
+  'h-Custom': string;
+}
+
+const authOpts: RouteShorthandOptions = {
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          data: {
+            type: 'string',
+          },
+        },
+      },
+    },
+  },
+};
+
+server.get<{ Querystring: IQuerystring; Headers: IHeaders }>(
+  '/auth',
+  authOpts,
+  async (req) => {
+    const { username, password } = req.query;
+    if (username === 'WanSimon' && password === '123456') {
+      return { data: 'success' };
+    }
+  },
+);
 
 server.listen({ port: 8080 }, (err, address) => {
   if (err) {
@@ -45,3 +65,5 @@ server.listen({ port: 8080 }, (err, address) => {
   }
   console.info(`Server listening at ${address}`);
 });
+
+export default server;
