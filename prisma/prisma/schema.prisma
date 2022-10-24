@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//性别选项
+enum Gender {
+  FEMALE
+  MALE
+  SECRET
+  NOSURE
+}
+
+//用户角色
+enum Role {
+  MANAGER //管理员
+  COMMON //博客创作者
+  INNER //内部工作人员
+}
+
+//创作权限
+enum Limition {
+  READ
+  COMMENT
+  CREATE
+  NORIGHT
+  ALL
+}
+
+//----------------------------------用户----------------------------------------------------------------------------------------------------
+model User {
+  id         String     @id @default(uuid()) //用户id
+  avator     String? //头像
+  mail       String? //邮箱
+  gender     Gender? //性别
+  username   String //用户名
+  role       Role       @default(MANAGER) //用户角色
+  phone      String //手机号
+  limition   Limition[] //用户权限
+  blogCount  Int //博客数量
+  experience Int //经验值
+  level      Int //级别
+  birthday   DateTime? //生日
+  locaton    String? //位置
+  profile    String? //个人介绍
+  signature  String? //个性签名
+  createdAt  DateTime   @default(now()) //创建日期
+  updatedAt  DateTime   @updatedAt //更新信息
+  Blogs      Blog[] //创作博客
+  Comment    Comment[]
+}
+
+//文本状态
+enum TextStatus {
+  SHOW
+  HIDDEN
+  DELETED
+}
+
+//-------------------------------博客----------------------------------------------------
+model Blog {
+  id          String     @id @default(uuid()) //id
+  title       String //标题
+  content     String //内容
+  like        Int //点赞
+  dislike     Int //不喜欢
+  viewedCount Int        @default(0) //浏览次数
+  // sponsor     Int        @default(0) //赞助
+  userId      String     @unique //用户id
+  User        User?      @relation(fields: [userId], references: [id]) //创作者
+  status      TextStatus @default(SHOW) //状态
+  createdAt   DateTime   @default(now()) //创作日期
+  updatedAt   DateTime   @updatedAt //更新日期
+  Comment     Comment[]
+}
+
+//--------------------------------评论-----------------------------------------------------
+model Comment {
+  id        String     @id @default(uuid()) //id
+  superId   String? //上一级的id
+  userId    String     @unique //评论者
+  blogId    String
+  content   String //内容
+  like      Int        @default(0)
+  dislike   Int        @default(0)
+  status    TextStatus @default(SHOW) //状态
+  createdAt DateTime   @default(now()) //创建日期
+  updatedAt DateTime   @updatedAt
+  Blog      Blog       @relation(fields: [blogId], references: [id]) //关联博客
+  Comment   Comment?   @relation(fields: [superId], references: [id])
+  User      User       @relation(fields: [userId], references: [id])
+
+  Comment Comment[]
+}
+
+//-----------------------------------------投诉----------------------------------------------
+//-----------------------------------------赞助----------------------------------------------

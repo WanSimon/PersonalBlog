@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import type { FastifyInstance } from 'fastify';
-import { routes } from './src/routers';
+import routes from './src/routers/user';
 const fastify: FastifyInstance = Fastify({});
 
 fastify.register(routes);

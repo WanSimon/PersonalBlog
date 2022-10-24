@@ -49,3 +49,5 @@ fastify.post<{
     rep.code(200).send({ status: true });
   },
 );
+
+export default routes;

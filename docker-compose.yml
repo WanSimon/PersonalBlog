@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 2543141840@qq.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    ports:
+      - '5050:5050'
+
+  postgres:
+    image: postgres:11.14
+    container_name: postgres
+    restart: unless-stopped
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: wansimon #在此填写postgres的用户名
+      POSTGRES_DB: postgres #在此填写postgres的数据库名，默认是postgres
+      POSTGRES_PASSWORD: 123456 #在此填写posgres的数据库密码
+    ports:
+      - '5432:5432'
+
+volumes:
+  data:

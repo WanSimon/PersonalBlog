@@ -11,3 +11,6 @@
 /dist
 /.mfsu
 */node_modules
+/data
+/pgadmin-data
+/innovators.sql
