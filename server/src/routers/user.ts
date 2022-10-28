@@ -1,18 +1,19 @@
 import type { FastifyInstance } from 'fastify';
-
 import { userLoginSchema, userLoginResponseSchema } from '../schema/users';
 import type { UserLogin, UserLoginResponse } from '../schema/users';
 import { Gender } from '../schema';
-import console from 'console';
 
 async function routes(
   fastify: FastifyInstance,
   //   options: RouteShorthandOptions,
 ) {
-  fastify.get<{ Body: UserLogin; Reply: UserLoginResponse }>(
+  fastify.post<{ Body: UserLogin; Reply: UserLoginResponse }>(
     '/login',
     {
       schema: {
+        description: 'User to Login',
+        tags: ['user'],
+        summary: 'User | Login',
         body: userLoginSchema,
         response: {
           200: userLoginResponseSchema,
@@ -21,7 +22,9 @@ async function routes(
     },
     (request, reply) => {
       const { username, password } = request.body;
-      console.log(password);
+      let blogs = fastify.prisma.blog.findMany();
+      console.info(blogs);
+      console.log(username, password);
       reply.code(200).send({
         success: true,
         data: {

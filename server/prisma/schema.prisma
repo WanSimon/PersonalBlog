@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//性别选项
+enum Gender {
+  FEMALE
+  MALE
+  SECRET
+  NOSURE
+}
+
+//用户角色
+enum Role {
+  MANAGER //管理员
+  COMMON //博客创作者
+  INNER //内部工作人员
+}
+
+//创作权限
+enum Limition {
+  READ
+  COMMENT
+  CREATE
+  NORIGHT
+  ALL
+}
+
+//----------------------------------用户----------------------------------------------------------------------------------------------------
+model User {
+  id                String              @id @default(uuid()) //用户id
+  avator            String?             @db.VarChar(266) //头像
+  mail              String?             @db.VarChar(32) //邮箱
+  gender            Gender? //性别
+  username          String              @db.VarChar(32) //用户名
+  role              Role                @default(MANAGER) //用户角色
+  phone             String              @unique //手机号
+  limition          Limition[] //用户权限
+  blogCount         Int                 @map("blog_count") //博客数量
+  experience        Int                 @db.Integer //经验值
+  level             Int                 @db.SmallInt //级别
+  birthday          DateTime?           @db.Date //生日
+  locaton           String?             @db.VarChar(32) //位置
+  profile           String?             @db.VarChar(128) //个人介绍
+  signature         String?             @db.VarChar(64) //个性签名
+  createdAt         DateTime            @default(now()) //创建日期
+  updatedAt         DateTime            @updatedAt //更新信息
+  Blogs             Blog[] //创作博客
+  Comments          Comment[] //用户评论
+  Categorys         Category[] //用户创建的标签
+  CategoriesOnUsers CategoriesOnUsers[] //用户标签
+}
+
+//文本状态
+enum TextStatus {
+  SHOW //展示
+  HIDDEN //隐藏
+  DELETED //删除
+}
+
+//-------------------------------博客----------------------------------------------------
+model Blog {
+  id          String     @id @default(uuid()) //id
+  title       String     @db.VarChar(256) //标题
+  content     String     @db.VarChar(512) //内容
+  like        Int        @default(0) //点赞
+  dislike     Int        @default(0) //不喜欢
+  viewedCount Int        @default(0) @map("viewed_count") //浏览次数
+  // sponsor     Int        @default(0) //赞助
+  userId      String     @map("user_id") //用户id
+  User        User?      @relation(fields: [userId], references: [id]) //创作者
+  status      TextStatus @default(SHOW) //状态
+  createdAt   DateTime   @default(now()) //创作日期
+  updatedAt   DateTime   @updatedAt //更新日期
+
+  Comment    Comment[] //评论
+  Categories CategoriesOnBlogs[] //分类
+}
+
+// 分类
+model Category {
+  id        String   @id @default(uuid()) //id
+  tag       String   @db.VarChar(30) //内容
+  userId    String   @map("user_id") @db.Uuid //创建用户
+  userName  String   @map("user_name") @db.VarChar(16) //创建者
+  createdAt DateTime @default(now()) @db.Date
+  updatedAt DateTime @updatedAt @db.Date
+  User      User     @relation(fields: [userId], references: [id])
+
+  Blogs             CategoriesOnBlogs[] //关联博客
+  CategoriesOnUsers CategoriesOnUsers[] //关联用户
+}
+
+//分类--博客关联表
+model CategoriesOnBlogs {
+  blogId     String   @map("blog_id")
+  Blog       Blog     @relation(fields: [blogId], references: [id])
+  categoryId String   @map("category_id")
+  Category   Category @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime @default(now())
+  userId     String   @map("user_id")
+
+  @@id([blogId, categoryId])
+}
+
+//--------------------------------评论-----------------------------------------------------
+model Comment {
+  id           String     @id @default(uuid()) //id
+  preCommentId String?    @map("pre_comment_id") //上一级的id
+  userId       String     @map("user_id") //评论者
+  blogId       String     @map("blog_id")
+  content      String     @db.VarChar(266) //内容
+  like         Int        @default(0) //喜欢
+  dislike      Int        @default(0) //不喜欢
+  status       TextStatus @default(SHOW) //状态
+  createdAt    DateTime   @default(now()) //创建日期
+  updatedAt    DateTime   @updatedAt //更新
+  Blog         Blog       @relation(fields: [blogId], references: [id]) //关联博客
+  PreComment   Comment?   @relation("PreAndSucComment", fields: [preCommentId], references: [id]) //上一条评论
+  User         User       @relation(fields: [userId], references: [id]) //评论者
+  SucComment   Comment[]  @relation("PreAndSucComment") //关联子评论
+}
+
+//-----------------------------------------投诉----------------------------------------------
+//-----------------------------------------赞助----------------------------------------------
+
+//   分类--用户关联表
+model CategoriesOnUsers {
+  userId     String   @map("user_id")
+  User       User     @relation(fields: [userId], references: [id])
+  categoryId String   @map("cateory_id")
+  Category   Category @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime @updatedAt
+
+  @@id([userId, categoryId])
+}

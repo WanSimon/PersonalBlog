@@ -12,11 +12,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@fastify/auth": "^4.1.0",
+    "@fastify/jwt": "^6.3.2",
     "@fastify/type-provider-typebox": "^2.3.0",
+    "@prisma/client": "^4.5.0",
     "@sinclair/typebox": "^0.24.47",
-    "fastify": "^4.9.2"
+    "fastify": "^4.9.2",
+    "fastify-plugin": "^4.3.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.2"
+    "@fastify/swagger": "^8.0.0",
+    "@fastify/swagger-ui": "^1.1.0",
+    "@types/node": "^18.11.2",
+    "prisma": "^4.5.0"
   }
 }

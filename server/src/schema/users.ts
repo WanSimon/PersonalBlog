@@ -5,7 +5,7 @@ export const userSchema = Type.Object({
   username: Type.String(),
   mail: Type.Optional(Type.String({ format: 'email' })),
   phone: Type.String(Type.String({ maxLength: 11, minLength: 11 })),
-  gender: Type.Enum(Gender, { examples: Gender.FEMALE }),
+  gender: Type.Enum(Gender, { examples: [Gender.FEMALE] }),
   blogCount: Type.Number({ default: 0 }),
 });
 
