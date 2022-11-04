@@ -1,5 +1,25 @@
 import { Static, Type } from '@sinclair/typebox';
 import { Nullable } from './extendType';
+import {
+  basicParamsSchema,
+  basicResponseSchema,
+  type BasicParams,
+  type BasicResponse,
+} from './basic';
+
+export const blogSchema = Type.Object({
+  id: Type.String({ format: 'uuid' }),
+  title: Type.String(),
+  content: Type.String(),
+  like: Type.Number(),
+  dislike: Type.Number(),
+  viewedCount: Type.String(),
+  userId: Type.String({ format: 'uuid' }),
+  createdAt: Type.String({ format: 'date' }),
+  updatedAt: Type.String({ format: 'date' }),
+});
+
+export type Blog = Static<typeof blogSchema>;
 
 export const getBlogListBodySchema = Type.Object({
   keyword: Type.Optional(Type.String()),
@@ -88,24 +108,33 @@ export const blogDetailResponseSchema = Type.Object({
   status: Type.Boolean({}),
   data: Type.Optional(
     Nullable(
-      Type.Object({
-        id: Type.String({ format: 'uuid' }),
-        title: Type.String({}),
-        content: Type.String({}),
-        like: Type.Number(),
-        dislike: Type.Number(),
-        viewedCount: Type.Number(),
-        userId: Type.String(),
-        userName: Type.String(),
-        categories: Type.Optional(
-          Type.Array(
-            Type.Object({
-              id: Type.String({ format: 'uuid' }),
-              tag: Type.String({}),
-            }),
-          ),
-        ),
-      }),
+      Type.Intersect([
+        blogSchema,
+        Type.Object({
+          categories: Type.Object({
+            id: Type.String({ format: 'uuid' }),
+            tag: Type.String(),
+          }),
+        }),
+      ]),
+      // Type.Object({
+      //   id: Type.String({ format: 'uuid' }),
+      //   title: Type.String({}),
+      //   content: Type.String({}),
+      //   like: Type.Number(),
+      //   dislike: Type.Number(),
+      //   viewedCount: Type.Number(),
+      //   userId: Type.String(),
+      //   userName: Type.String(),
+      //   categories: Type.Optional(
+      //     Type.Array(
+      //       Type.Object({
+      //         id: Type.String({ format: 'uuid' }),
+      //         tag: Type.String({}),
+      //       }),
+      //     ),
+      //   ),
+      // }),
     ),
   ),
 });
@@ -117,9 +146,44 @@ export const categoryCreateBodySchema = Type.Object({
   updatedAt: Type.String({ format: 'date' }),
 });
 
+export const categoryCreateParamsSchema = basicParamsSchema;
+
 export const categoryCreateResponseSchema = Type.Object({
   status: Type.Boolean(),
 });
+
+export type CategoryCreateBody = Static<typeof categoryCreateBodySchema>;
+export type CategoryCreateParams = Static<typeof categoryCreateParamsSchema>;
+export type CategoryCreateResponse = Static<
+  typeof categoryCreateResponseSchema
+>;
+
+export const categoryDeleteParamsSchema = basicParamsSchema;
+export const categoryDeleteResponseSchema = basicResponseSchema;
+
+export const categoryUpdateParamsSchema = basicParamsSchema;
+export const categoryUpdateBodySchema = Type.Object({
+  tag: Type.String(),
+  userId: Type.String({ format: 'uuid' }),
+});
+
+export type CategoryUpdateParams = BasicParams;
+export type CategoryUpdateBody = Static<typeof categoryUpdateBodySchema>;
+export type CategoryDeleteParams = Static<typeof categoryDeleteParamsSchema>;
+export type CategoryDeleteResponse = Static<
+  typeof categoryDeleteResponseSchema
+>;
+
+export const categoryOnBlogDeleteParamsSchema = Type.Object({
+  blogId: Type.String({ format: 'uuid' }),
+  categoryId: Type.String({ format: 'uuid' }),
+});
+export const categoryOnBlogDeleteResponseSchema = basicResponseSchema;
+
+export type CategoryOnBlogDeleteParams = Static<
+  typeof categoryOnBlogDeleteParamsSchema
+>;
+export type CategoryOnBlogDeleteResponse = CategoryDeleteResponse;
 
 export const deletedBlogParamsSchema = updatedBlogParamsSchema;
 export const deletedBlogResponseSchema = updatedBlogResponseSchema;

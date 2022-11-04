@@ -1,4 +1,3 @@
-import fastify from '../../index';
 import {
   getBlogListParamsSchema,
   getBlogListBodySchema,

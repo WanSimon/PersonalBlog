@@ -23,7 +23,7 @@ enum Role {
 }
 
 //创作权限
-enum Limition {
+enum Permission {
   READ
   COMMENT
   CREATE
@@ -34,13 +34,13 @@ enum Limition {
 //----------------------------------用户----------------------------------------------------------------------------------------------------
 model User {
   id                String              @id @default(uuid()) //用户id
-  avator            String?             @db.VarChar(266) //头像
+  avatar            String?             @db.VarChar(266) //头像
   mail              String?             @db.VarChar(32) //邮箱
   gender            Gender? //性别
   username          String              @db.VarChar(32) //用户名
   role              Role                @default(MANAGER) //用户角色
   phone             String              @unique //手机号
-  limition          Limition[] //用户权限
+  limition          Permission[] //用户权限
   blogCount         Int                 @map("blog_count") //博客数量
   experience        Int                 @db.Integer //经验值
   level             Int                 @db.SmallInt //级别
@@ -73,7 +73,7 @@ model Blog {
   viewedCount Int        @default(0) @map("viewed_count") //浏览次数
   // sponsor     Int        @default(0) //赞助
   userId      String     @map("user_id") //用户id
-  User        User?      @relation(fields: [userId], references: [id]) //创作者
+  User        User       @relation(fields: [userId], references: [id]) //创作者
   status      TextStatus @default(SHOW) //状态
   createdAt   DateTime   @default(now()) //创作日期
   updatedAt   DateTime   @updatedAt //更新日期

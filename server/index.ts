@@ -52,13 +52,13 @@ fastify.register(fastifySwaggerUi, {
 
 fastify.register(routes);
 
-fastify.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err);
-    console.info(address);
-    process.exit(1);
-  }
-  console.info(`Server listening at ${address}`);
-});
+// fastify.listen({ port: 8080 }, (err, address) => {
+//   if (err) {
+//     console.error(err);
+//     console.info(address);
+//     process.exit(1);
+//   }
+//   console.info(`Server listening at ${address}`);
+// });
 
 export default fastify;
